@@ -12,7 +12,7 @@ import tkinter.messagebox as messagebox
 import os
 import numpy as np
 class Application(tk.Frame):   #从Frame派生出Application类，它是所有widget的父容器
-    def __init__(self,para_list,choice_list,exe_file,output_dir, master = None):#master即是窗口管理器，用于管理窗口部件，如按钮标签等，顶级窗口master是None，即自己管理自己
+    def __init__(self,para_list,choice_list,exe_file,output_file, master = None):#master即是窗口管理器，用于管理窗口部件，如按钮标签等，顶级窗口master是None，即自己管理自己
         tk.Frame.__init__(self,master)
         self.grid()#将widget加入到父容器中并实现布局
         self.para_list = para_list
@@ -25,7 +25,7 @@ class Application(tk.Frame):   #从Frame派生出Application类，它是所有wi
         self.str5 = '_step'
         self.exe_file =exe_file
         self.createWidgets()
-
+        self.output_file =output_file
     def createWidgets(self):
         print(self.len)
         self.trainfile = tk.Label(self,text = 'python file')
@@ -138,6 +138,7 @@ class Application(tk.Frame):   #从Frame派生出Application类，它是所有wi
         f = open(self.exe_file,'w')
         total_num = 1
         para_len = []
+        output_dir = self.output_file
         for i in range(self.len):
             total_num = total_num*len(create_var[para_list[i]])
             para_len.append(len(create_var[para_list[i]]))
@@ -152,20 +153,20 @@ class Application(tk.Frame):   #从Frame派生出Application类，它是所有wi
         os.system(command)
         messagebox.showinfo('Message','Done')#显示输出
 #parameter list
-para_list = ['cf','pf','rf']
+para_list = ['pf','cf']
 
 #choice_list
 #fixed only one value
 #random uniform sampling
 #step linear sampling
-choice_list = ['fixed','random','step']
+choice_list = ['step','fixed']
 
 #
 bash_file = 'run_test'
 
 #
-output_dir = 'A->C'
-app = Application(para_list,choice_list,bash_file,output_dir)
+output_file = 'CAA_'
+app = Application(para_list,choice_list,bash_file,output_file)
 app.master.title("Fine Tuning Master")#窗口标题
 app.master.geometry("500x400")
 app.mainloop()#主消息循环
